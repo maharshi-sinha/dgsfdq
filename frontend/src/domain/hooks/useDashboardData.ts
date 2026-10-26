@@ -16,8 +16,11 @@ export function useDashboardData() {
 
   const latestActual = actuals.data?.points.at(-1) ?? null;
 
+  const settled = !forecast.isLoading && !actuals.isLoading && !accuracy.isLoading;
+  const anyError = forecast.isError || actuals.isError || accuracy.isError;
+
   return {
-    isLoading: forecast.isLoading || actuals.isLoading || accuracy.isLoading,
+    isLoading: !settled && !anyError,
     forecast: forecast.data ?? null,
     latestActual,
     accuracy: accuracy.data ?? null,

@@ -7,6 +7,10 @@ interface ThemeState {
   toggle: () => void;
 }
 
+if (typeof document !== "undefined") {
+  document.documentElement.classList.remove("dark");
+}
+
 export const useTheme = create<ThemeState>((set) => ({
   mode: "light" as ThemeMode,
   toggle: () =>

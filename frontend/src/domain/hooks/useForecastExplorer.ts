@@ -22,10 +22,13 @@ export function useForecastExplorer() {
       )
     : null;
 
+  const settled = !forecast.isLoading && !actuals.isLoading;
+  const anyError = forecast.isError || actuals.isError;
+
   return {
     deliveryDate,
     setDeliveryDate,
-    isLoading: forecast.isLoading || actuals.isLoading,
+    isLoading: !settled && !anyError,
     forecast: forecast.data ?? null,
     chartData,
     peakForecast,

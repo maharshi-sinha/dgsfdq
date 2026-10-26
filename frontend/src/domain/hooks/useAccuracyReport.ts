@@ -13,9 +13,11 @@ export function useAccuracyReport() {
   const hourly = useHourlyAccuracy();
   const worstCases = useWorstCases();
 
+  const allSettled = !summary.isLoading && !daily.isLoading && !distribution.isLoading && !hourly.isLoading && !worstCases.isLoading;
+  const anyError = summary.isError || daily.isError || distribution.isError || hourly.isError || worstCases.isError;
+
   return {
-    isLoading:
-      summary.isLoading || daily.isLoading || distribution.isLoading || hourly.isLoading || worstCases.isLoading,
+    isLoading: !allSettled && !anyError,
     summary: summary.data,
     daily: daily.data,
     distribution: distribution.data,
