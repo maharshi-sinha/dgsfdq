@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { LayoutDashboard, TrendingUp, Target, Settings, Wind, Sun, Moon } from "lucide-react";
+import { LayoutDashboard, TrendingUp, Target, Wind, Sun, Moon } from "lucide-react";
 import { useTheme } from "../../shared/theme/useTheme";
 import { ROUTES } from "../../shared/constants/routes";
 

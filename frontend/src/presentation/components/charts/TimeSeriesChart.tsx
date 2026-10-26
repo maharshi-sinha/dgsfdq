@@ -1,4 +1,4 @@
-import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Area, ComposedChart } from "recharts";
+import { ResponsiveContainer, Line, XAxis, YAxis, CartesianGrid, Tooltip, Area, ComposedChart } from "recharts";
 import type { ChartPoint } from "../../../domain/services/formatting.service";
 
 interface TimeSeriesChartProps {
@@ -32,7 +32,7 @@ export function TimeSeriesChart({ data, showErrorBand = false }: TimeSeriesChart
             border: "1px solid var(--color-gray-200)",
             boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
           }}
-          formatter={(value: number) => [`${value.toLocaleString()} MW`]}
+          formatter={(value) => [`${Number(value).toLocaleString()} MW`]}
         />
         {showErrorBand && (
           <Area type="monotone" dataKey="forecast" fill="rgba(42,120,214,0.06)" stroke="none" />
