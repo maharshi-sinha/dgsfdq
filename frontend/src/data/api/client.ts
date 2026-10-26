@@ -7,7 +7,7 @@ export const apiClient = axios.create({
 });
 
 apiClient.interceptors.response.use((response) => {
-  const ct = response.headers["content-type"] ?? "";
+  const ct = String(response.headers["content-type"] ?? "");
   if (ct.includes("text/html")) {
     return Promise.reject(new axios.AxiosError("Expected JSON, got HTML", "ERR_BAD_RESPONSE", response.config, response.request, response));
   }
