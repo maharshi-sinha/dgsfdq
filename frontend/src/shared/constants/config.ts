@@ -1,0 +1,6 @@
+export const APP_CONFIG = {
+  GATE_CLOSURE_HOUR: 9,
+  DEFAULT_DELIVERY_DATE: "2026-01-02",
+  MONTH_START: "2026-01-01",
+  MONTH_END: "2026-01-31",
+} as const;
