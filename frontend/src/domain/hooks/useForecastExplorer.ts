@@ -5,7 +5,7 @@ import { alignForecastAndActuals } from "../services/formatting.service";
 import { APP_CONFIG } from "../../shared/constants/config";
 
 export function useForecastExplorer() {
-  const [deliveryDate, setDeliveryDate] = useState(APP_CONFIG.DEFAULT_DELIVERY_DATE);
+  const [deliveryDate, setDeliveryDate] = useState<string>(APP_CONFIG.DEFAULT_DELIVERY_DATE);
 
   const forecast = useForecastAtGate(deliveryDate);
   const actuals = useActualsByDate(deliveryDate);
