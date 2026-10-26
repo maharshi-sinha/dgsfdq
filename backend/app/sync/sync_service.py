@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date, datetime
 
 import structlog
 from sqlalchemy.dialects.postgresql import insert
@@ -10,6 +10,18 @@ from app.models.wind_forecast import WindForecast
 from app.sync.elexon_client import ElexonClient
 
 logger = structlog.get_logger()
+
+
+def _parse_dt(val: str | datetime) -> datetime:
+    if isinstance(val, datetime):
+        return val
+    return datetime.fromisoformat(val.replace("Z", "+00:00")).replace(tzinfo=None)
+
+
+def _parse_date(val: str | date) -> date:
+    if isinstance(val, date):
+        return val
+    return date.fromisoformat(val)
 
 
 class SyncService:
@@ -33,14 +45,14 @@ class SyncService:
             upserted = 0
             for r in records:
                 stmt = insert(WindActual).values(
-                    start_time=r["startTime"],
-                    settlement_date=r["settlementDate"],
+                    start_time=_parse_dt(r["startTime"]),
+                    settlement_date=_parse_date(r["settlementDate"]),
                     settlement_period=r["settlementPeriod"],
                     generation_mw=r["generation"],
-                    publish_time=r["publishTime"],
+                    publish_time=_parse_dt(r["publishTime"]),
                 ).on_conflict_do_update(
                     constraint="uq_wind_actuals_start_time",
-                    set_={"generation_mw": r["generation"], "publish_time": r["publishTime"]},
+                    set_={"generation_mw": r["generation"], "publish_time": _parse_dt(r["publishTime"])},
                 )
                 await self.session.execute(stmt)
                 upserted += 1
@@ -71,9 +83,9 @@ class SyncService:
             upserted = 0
             for r in records:
                 stmt = insert(WindForecast).values(
-                    start_time=r["startTime"],
+                    start_time=_parse_dt(r["startTime"]),
                     generation_mw=r["generation"],
-                    publish_time=r["publishTime"],
+                    publish_time=_parse_dt(r["publishTime"]),
                 ).on_conflict_do_update(
                     constraint="uq_wind_forecasts_start_publish",
                     set_={"generation_mw": r["generation"]},

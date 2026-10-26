@@ -25,7 +25,10 @@ class ForecastRepository:
             .limit(1)
         )
         result = await self.session.execute(stmt)
-        return result.scalar_one_or_none()
+        val = result.scalar_one_or_none()
+        if val is not None and val.tzinfo is not None:
+            val = val.replace(tzinfo=None)
+        return val
 
     async def get_forecasts_by_run(self, delivery_date: date, publish_time: datetime) -> list[WindForecast]:
         start_of_day = datetime(delivery_date.year, delivery_date.month, delivery_date.day)
