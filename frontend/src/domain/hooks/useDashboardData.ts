@@ -14,7 +14,7 @@ export function useDashboardData() {
       ? alignForecastAndActuals(forecast.data.points, actuals.data.points)
       : [];
 
-  const latestActual = actuals.data?.points.at(-1) ?? null;
+  const latestActual = actuals.data?.points?.at(-1) ?? null;
 
   const settled = !forecast.isLoading && !actuals.isLoading && !accuracy.isLoading;
   const anyError = forecast.isError || actuals.isError || accuracy.isError;
