@@ -8,7 +8,7 @@ interface ThemeState {
 }
 
 export const useTheme = create<ThemeState>((set) => ({
-  mode: (typeof window !== "undefined" && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light",
+  mode: "light" as ThemeMode,
   toggle: () =>
     set((state) => {
       const next = state.mode === "light" ? "dark" : "light";
