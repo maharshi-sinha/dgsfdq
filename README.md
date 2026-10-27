@@ -151,6 +151,8 @@ The frontend dev server starts at `http://localhost:3000` with hot module replac
 
 ## API Endpoints
 
+All frontend endpoint paths are centralized in [`frontend/src/data/api/endpoints.ts`](frontend/src/data/api/endpoints.ts).
+
 | Method | Endpoint | Description |
 |---|---|---|
 | `GET` | `/api/health` | Health check |
